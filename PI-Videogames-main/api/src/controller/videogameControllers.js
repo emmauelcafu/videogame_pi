@@ -1,4 +1,5 @@
 const axios = require ('axios');
+const {Videogame} =require('../db')
 
 require('dotenv').config();
 const {
@@ -27,7 +28,7 @@ const getVideogByName=async(name)=>{
 
    }catch(error){
     console.error("Error al obtener datos de la API:", error);
-
+       
    }
 
 }
@@ -43,11 +44,24 @@ const getVideogId= async(id)=>{
     }
 
 }
+//creamos un video juegos// 
+const createVideogamesDB =async (name,description,released,image,rating)=>{
+
+    const newVideoGame = await Videogame.create({
+        name,
+        description,
+        released,
+        image,
+        rating
+    })
+    return newVideoGame;
+}
 
 
 module.exports = {
     getVideogByName,
     getAllVideoGame,
     getVideogId,
+    createVideogamesDB
     
 }
