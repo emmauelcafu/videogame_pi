@@ -21,7 +21,7 @@ const videogameHandler = async(req,res)=>{
     }
 }
 
-
+//se tiene que buscar por db y api con sus filtros
 //resivimos params de id 
 const videogamedetailHandler = async(req,res)=>{
         const {id}=req.params;
