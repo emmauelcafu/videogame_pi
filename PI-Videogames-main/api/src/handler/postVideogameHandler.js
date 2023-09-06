@@ -2,9 +2,9 @@ const {createVideogamesDB} = require('../controller/videogameControllers')
 
 
 const postVideogameHandler = async(req,res)=>{
-       const {name,description,released,image,rating}= req.body
+       const {name,description,released,image,rating,platforms}= req.body
        
-            const acracteres = (name,description,released,image,rating)
+            const acracteres = (name,description,released,image,rating, platforms)
             // console.log(name,description,released,image,rating);
        try {
         const newVideoGame  = await createVideogamesDB(acracteres)

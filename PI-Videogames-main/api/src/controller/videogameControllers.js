@@ -5,6 +5,19 @@ require('dotenv').config();
 const {
     KEY_API,
   } = process.env;
+
+//filto para la api//
+function infofilter(array){
+        return{
+            name:array.name,
+             description:array.description,
+             released: array.released,
+             image:array.background_image,
+             rating: array.rating,
+           platforms: array.platforms,
+        }
+    }
+
   
 //solicitud de todo los video juegos 
 const getAllVideoGame=async ()=>{
@@ -22,8 +35,8 @@ const getAllVideoGame=async ()=>{
 const getVideogByName=async(name)=>{
    try{
     const infoApi  = await axios.get(`https://api.rawg.io/api/games?search=${name}&key=${KEY_API}`);
-    
-    const infoApiData  = infoApi.data;
+    // se filtra la api//
+    const infoApiData  = infofilter(infoApi.data);
     return infoApiData
 
    }catch(error){
@@ -37,7 +50,8 @@ const getVideogId= async(id)=>{
     try {
 
         const infoApi = await axios.get(`https://api.rawg.io/api/games/${id}?key=${KEY_API}`)
-        const infoApiData = infoApi.data
+        // se filtra la api//
+        const infoApiData =  infofilter(infoApi.data)
         return infoApiData;
     } catch (error) {
     console.error("Error al obtener datos de la API:", error);
@@ -45,14 +59,15 @@ const getVideogId= async(id)=>{
 
 }
 //creamos un video juegos// 
-const createVideogamesDB =async (name,description,released,image,rating)=>{
+const createVideogamesDB =async (name,description,released,image,rating,platforms)=>{
 
     const newVideoGame = await Videogame.create({
         name,
         description,
         released,
         image,
-        rating
+        rating,
+        platforms
     })
     return newVideoGame;
 }

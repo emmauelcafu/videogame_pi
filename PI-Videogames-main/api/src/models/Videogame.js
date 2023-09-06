@@ -27,6 +27,9 @@ module.exports = (sequelize) => {
     rating:{
       type: DataTypes.INTEGER
     },
+    platforms:{
+      type: DataTypes.STRING
+    }
   });
 };
 
