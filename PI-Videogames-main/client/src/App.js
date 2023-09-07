@@ -1,11 +1,16 @@
 import './App.css';
+import {Route} from "react-router-dom";
+import Home from "../src/views/home/home.component"
 
 function App() {
   return (
-    <div className="App">
-      <h1>Henry Videogames</h1>
+    <div>
+
+      <Route exact path="/home" component={Home}/>
+
+
     </div>
-  );
+    );
 }
 
 export default App;
