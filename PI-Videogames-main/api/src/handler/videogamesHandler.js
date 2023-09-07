@@ -25,6 +25,7 @@ const videogameHandler = async(req,res)=>{
 //resivimos params de id 
 const videogamedetailHandler = async(req,res)=>{
         const {id}=req.params;
+        //validamos la bd si es o en en la api
         const source = isNaN(id)? "bd":"api"
     try {
         const videogId =await getVideogId(id,source);
