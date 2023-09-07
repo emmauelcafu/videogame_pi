@@ -20,14 +20,16 @@ const videogameHandler = async(req,res)=>{
                 
     }
 }
-
-//se tiene que buscar por db y api con sus filtros
+//Tiene que incluir los datos del género del videojuego al que está asociado.
+//Debe funcionar tanto para los videojuegos de la API como para los de la base de datos.
 //resivimos params de id 
 const videogamedetailHandler = async(req,res)=>{
         const {id}=req.params;
+        const source = isNaN(id)? "bd":"api"
     try {
-        const videogId =await getVideogId(id);
+        const videogId =await getVideogId(id,source);
         res.status(200).json(videogId);
+
         
     } catch (error) {
         res.status(400).send("pagina no encontrada");
