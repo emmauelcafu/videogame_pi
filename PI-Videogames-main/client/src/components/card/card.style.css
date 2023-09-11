@@ -1,0 +1,12 @@
+.card_component{
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    margin: 16px;
+    width: 200px; /* Ajusta el tamaño según tu diseño */
+    height: 300px; /* Ajusta el tamaño según tu diseño */
+    perspective: 1000px; /* Agrega perspectiva para la animación 3D */
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease; /* Agrega una transición suave */
+}
