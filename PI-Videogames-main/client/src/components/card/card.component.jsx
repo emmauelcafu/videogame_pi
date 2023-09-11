@@ -1,16 +1,17 @@
+import './card.style.css'
 
-function Card (){
+
+function Card ({videogames}){
+    const{name,description,released,image,rating,platforms}=videogames
 
     return(
-        <div>
-            <h2> estamso en una Card</h2>
-            <p>id</p>
-            <p>name</p>
-            <p>description</p> 
-            <p>released</p>
-            <p>image</p>
-            <p>rating</p>
-            <p>platforms</p>
+        <div className='card_component'>
+            <h2>{name}</h2>
+            <p>{description}</p>
+            <p>{released}</p>
+            <p>{image}</p> 
+            <p>{rating}</p>
+            <p>{platforms}</p>
         </div>
     )
     

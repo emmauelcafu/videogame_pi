@@ -1,14 +1,16 @@
 import Card from "../card/card.component"
+import './cards.style.css'
 
-function Cards (){
+function Cards ({videogame}){
+
+    const listaVideogame = videogame;
 
 return(
-    <div>
-        <h1> estamso en una Cards</h1>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
+    <div className='cards_component'>
+        {listaVideogame?.map(videoGame=>(
+            <Card videoGame={videoGame}/>
+        ))}
+       
     </div>
 )
 
