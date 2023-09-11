@@ -29,7 +29,11 @@ module.exports = (sequelize) => {
     },
     platforms:{
       type: DataTypes.STRING
-    }
+    },
+    created:{
+      type:DataTypes.BOOLEAN,
+      defaultValue:true,
+  }
   });
 };
 

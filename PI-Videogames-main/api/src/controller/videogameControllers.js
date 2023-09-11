@@ -31,9 +31,21 @@ function infofilter(array){
              released: array.released,
              image:array.background_image,
              rating: array.rating,
-           platforms: array.platforms.map(platform=>platform.platform.name),    //?.map(plataf=>plataf.name),
-           genres: array.genres.map(genre=>genre.name) //
+           platforms: array.platforms.map(arr=>arr.name),  //arroja null hay que arreglarlo 
+           genres: array.genres.map(genre=>genre.name) 
         }
+    }
+    function cls(array){
+        return array.map( array=> {
+            return{
+        name:array.name,
+        description:array.description,
+        released: array.released,
+        image:array.background_image,
+        rating: array.rating,
+        platforms: array.platforms.map((arra)=> arra.platform.name),
+        genres: array.genres.map((arra)=> arra.name)
+        }})
     }
 
   
@@ -44,8 +56,7 @@ const getAllVideoGame=async ()=>{
 
     try{
     const infoApi = await axios.get(`https://api.rawg.io/api/games?&key=${KEY_API}`);
-    const infoApiData = infoApi.data;
-    
+    const infoApiData = infoApi.data.results;
     return {infoApiData }
 
 }catch(error){
@@ -53,17 +64,18 @@ const getAllVideoGame=async ()=>{
 }
 }
 
-//Esta ruta debe obtener los primeros 15 videojuegos que se encuentren con la palabra recibida por query.
+//Esta ruta debe obtener los primeros 15 videojuegos que se encuentren con la palabra recibida por query.👍
 //Debe poder buscarlo independientemente de mayúsculas o minúsculas.
 //Debe buscar tanto los de la API como los de la base de datos.
-// controlamos el get por nonbre
+// controlamos el get por nonbre👍
 const getVideogByName=async(name)=>{
    try{
     const infoApi  = await axios.get(`https://api.rawg.io/api/games?search=${name}&key=${KEY_API}`);
     // se filtra la api//
-    const infoApiData  = infofilter(infoApi.data);
-    return infoApiData
-
+    const infoApiData  = infoApi.data.results;
+    const infomap =  cls(infoApiData).slice(0,15);
+    
+   return infomap;
    }catch(error){
     console.error("Error al obtener datos de la API:", error);
        
@@ -71,7 +83,7 @@ const getVideogByName=async(name)=>{
 
 }
 //Tiene que incluir los datos del género del videojuego al que está asociado.👍
-//Debe funcionar tanto para los videojuegos de la API como para los de la base de datos.👍
+//Debe funcionar tanto para los videojuegos de la API como para los de la base de datos.
 // consultar por  /:id 👍
 const getVideogId= async(id,source)=>{
     
@@ -79,8 +91,9 @@ const getVideogId= async(id,source)=>{
     try {
             // se incluye la bd para validar si es en la api o en bd
         const infoApi =source === "api"? (await axios.get(`https://api.rawg.io/api/games/${id}?key=${KEY_API}`)).data: await Videogame.findByPk(id)
-        // se filtra la api//
+        // se filtra la api// al mamento de consultar por id de la DB arroja erro , debe ser un erro de filtrado a la DB.
         const infoApiData =  infofilter(infoApi);
+
         // const genreName = await getGenerAllController();
      
         // infoApiData.genres = genreName;
