@@ -1,17 +1,13 @@
 const axios = require ('axios');
-const {Videogame} =require('../db');
-// const {genresHandler} = require('../handler/GenresHandler');
-// const {getGenerAllController}= require('../controller/genresControllers')
-
+const {Videogame, Genre} =require('../db');
 require('dotenv').config();
 const {
     KEY_API,
   } = process.env;
 
 //creamos un video juegos a la DB//
-
-  const createVideogamesDB =async (name,description,released,image,rating,platforms)=>{
-
+  const createVideogamesDB =async (name,description,released,image,rating,platforms,Genres)=>{
+//    const bd = Genre
     const newVideoGame = await Videogame.create({
         name,
         description,
@@ -20,6 +16,10 @@ const {
         rating,
         platforms
     })
+    
+    await newVideoGame.addGenres(Genres)
+    
+   
     return newVideoGame;
 }
 
@@ -83,7 +83,7 @@ const getVideogByName=async(name)=>{
 
 }
 //Tiene que incluir los datos del género del videojuego al que está asociado.👍
-//Debe funcionar tanto para los videojuegos de la API como para los de la base de datos.
+//Debe funcionar tanto para los videojuegos de la API como para los de la base de datos.🤞
 // consultar por  /:id 👍
 const getVideogId= async(id,source)=>{
     
@@ -92,12 +92,7 @@ const getVideogId= async(id,source)=>{
             // se incluye la bd para validar si es en la api o en bd
         const infoApi =source === "api"? (await axios.get(`https://api.rawg.io/api/games/${id}?key=${KEY_API}`)).data: await Videogame.findByPk(id)
         // se filtra la api// al mamento de consultar por id de la DB arroja erro , debe ser un erro de filtrado a la DB.
-        const infoApiData =  infofilter(infoApi);
-
-        // const genreName = await getGenerAllController();
-     
-        // infoApiData.genres = genreName;
-
+        const infoApiData = infoApi;
         return infoApiData;
     } catch (error) {
     console.error("Error al obtener datos de la API:", error);
