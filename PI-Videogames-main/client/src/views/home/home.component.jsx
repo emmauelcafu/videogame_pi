@@ -1,17 +1,25 @@
+import { useEffect } from "react";
 import Cards from "../../components/cards/cards.component";
 import Navbar from "../../components/navbar/navnar.component";
-import { useSelector} from "react-redux";
+import { useDispatch} from "react-redux";
+import {getVideogam} from "../../redux/actions/index";
+
+import "./home.style.css";
+
 function Home (){
 
-    // const dispath = useDispatch();
-    const allVideogame =useSelector((state)=>state.videogames);
-
+    
+    const dispatch = useDispatch();
+ ;
+    useEffect(()=>{
+        dispatch(getVideogam())
+    },[dispatch])
 
     return(
-        <div>
-            <h1>hola estamos en home</h1>
+        <div >
+            <h1 className="h1-text">Juegos a la moda</h1>
             <Navbar/>
-            <Cards allvideogame={allVideogame}/>
+            <Cards />
         </div>
     )
 

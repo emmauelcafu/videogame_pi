@@ -1,9 +1,11 @@
 .cards_component{
     display: flex;
     flex-wrap: wrap; /* Permite que las tarjetas se envuelvan en varias filas */
-    gap: 16px;
+    gap: 56px;
 }
 .cards_component :hover{
-    background-color: #b7f0e4e1;
+    background-color: #a5a5a5e1;
     transform: scale(1.05);
+    background: #a5a5a5e1;
+    cursor: pointer;
 }

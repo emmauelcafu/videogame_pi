@@ -15,29 +15,40 @@ const {
         image,
         rating,
         platforms
-    })
+    });
+
+    if (Genres && Genres.length > 0) {
+      const genresToAssociate = await Genre.findAll({
+        where: {
+          name: Genres,
+        },
+      });
+
+      await newVideoGame.addGenres(genresToAssociate);
+    }
     
-    await newVideoGame.addGenres(Genres)
+    // await newVideoGame.addGenres(Genres)
     
    
     return newVideoGame;
 }
 
 //filto para la api//
-function infofilter(array){
-        return{
-            name:array.name,
-             description:array.description,
-             released: array.released,
-             image:array.background_image,
-             rating: array.rating,
-           platforms: array.platforms.map(arr=>arr.name),  //arroja null hay que arreglarlo 
-           genres: array.genres.map(genre=>genre.name) 
-        }
-    }
+// function infofilter(array){
+//         return{
+//             name:array.name,
+//              description:array.description,
+//              released: array.released,
+//              image:array.background_image,
+//              rating: array.rating,
+//            platforms: array.platforms.map(arr=>arr.name),  //arroja null hay que arreglarlo 
+//            genres: array.genres.map(genre=>genre.name) 
+//         }
+//     }
     function cls(array){
         return array.map( array=> {
             return{
+        id:array.id,
         name:array.name,
         description:array.description,
         released: array.released,
@@ -47,17 +58,19 @@ function infofilter(array){
         genres: array.genres.map((arra)=> arra.name)
         }})
     }
-
+   
   
 //solicitud de todo los video juegos 
 const getAllVideoGame=async ()=>{
 
-    // const VideogameDB = await Videogame.findAll();
+    // const VideogameDB = await Videogame.findAll(); // si funsiona solo es que genera error cuando se consulta todos los videos
 
     try{
     const infoApi = await axios.get(`https://api.rawg.io/api/games?&key=${KEY_API}`);
     const infoApiData = infoApi.data.results;
-    return {infoApiData }
+
+    const infoAllData= cls(infoApiData).slice(0,15);// se retorna solo 15 videogames
+    return infoAllData
 
 }catch(error){
     console.error("Error al obtener datos de la API:", error);

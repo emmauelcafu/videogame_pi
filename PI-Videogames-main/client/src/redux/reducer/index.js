@@ -1,16 +1,18 @@
-import {GET_REPICES_DETAIL} from "../actions/index"
+import { GET_VIDEOGAMES} from "../actions/index";
+
 
 let initialState ={videogame:[]}
 
 function rootReducer(state=initialState, action){
     
     switch (action.type) {
-        case GET_REPICES_DETAIL:
+        case GET_VIDEOGAMES:
+        
           return{
             ...state,
             videogame: action.payload
+            
           }      
-    
         default:
             return state
     }

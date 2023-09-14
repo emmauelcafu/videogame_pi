@@ -1,17 +1,16 @@
 import './card.style.css'
+import { Link } from 'react-router-dom';
 
-
-function Card ({videogames}){
-    const{name,description,released,image,rating,platforms}=videogames
+function Card (props){
+   const id = props.id
 
     return(
         <div className='card_component'>
-            <h2>{name}</h2>
-            <p>{description}</p>
-            <p>{released}</p>
-            <p>{image}</p> 
-            <p>{rating}</p>
-            <p>{platforms}</p>
+            <Link className="Link_card" to={`/home/${id}`}>
+            <img className='image' src={props.image} alt={props.name}  />
+            <h3>{props.name}</h3>
+            <p>Géneros: {props.genres.join(', ')}</p>
+            </Link>
         </div>
     )
     

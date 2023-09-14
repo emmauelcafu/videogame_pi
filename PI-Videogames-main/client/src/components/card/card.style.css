@@ -1,5 +1,5 @@
 .card_component{
-    background-color: #ffffff;
+    background-color: #050d27;
     border-radius: 8px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     padding: 16px;
@@ -9,4 +9,15 @@
     perspective: 1000px; /* Agrega perspectiva para la animación 3D */
     transform-style: preserve-3d;
     transition: transform 0.5s ease; /* Agrega una transición suave */
+}
+.image{
+    max-width: 100% !important;
+    max-height: 100% !important;
+    display: block;
+    margin: 0 auto;
+    border-radius: 5%;
+}
+.Link_card{
+    text-decoration: none; /* Elimina el subrayado */
+    color: #d8dcdd; /* Cambia el color a tu preferencia */
 }
