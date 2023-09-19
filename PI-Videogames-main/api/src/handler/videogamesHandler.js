@@ -7,8 +7,15 @@ const videogameHandler = async(req,res)=>{
   
     try {
         if(name){//lo tomamos por nombre si no esta , mandara todo los juegos.
-            const videogByName= await getVideogByName(name)
+            const videogByName= await getVideogByName(name);
             res.status(200).json(videogByName);
+        //  if(name.length ===0){
+        //     res.status(400).send(`name del video juego no encomtradp `);
+        //  } 
+        //  else{
+        //     res.status(200).json(videogByName);
+        //  }
+            
         }else {//todo los juegos*=)
             const response =await getAllVideoGame();
             res.status(200).json(response)

@@ -1,5 +1,7 @@
 require('dotenv').config();
 
+const {Genre}= require("../db")
+
 const axios = require("axios");
 const {KEY_API} = process.env;
 //filtros para utilizarlo despues.
@@ -17,8 +19,24 @@ const getGenerAllController=async()=>{
     const infoGenerApi= await axios.get(`https://api.rawg.io/api/genres?&key=${KEY_API}`)
     const infoGenerApiData = infoGenerApi.data.results;
         /// se hace un filtro para solo retornar el name del genres.
-    return  filtarGenersName(infoGenerApiData);
+        const filtrogenres = filtarGenersName(infoGenerApiData)
+       // verificar si ya existe en db
+        const existeGenres = await Genre.findAll({
+            where: {
+                name:filtrogenres.map((genres)=> genres.name),
+            },
+        });
+            //filtrar genres no ecistente  en db 
+        const newGenres = filtrogenres.filter((genre) => {
+            return !existeGenres.some((existingGenre) => existingGenre.name === genre.name);
+          });
 
+          if (newGenres.length > 0) {
+            await Genre.bulkCreate(newGenres);
+          }
+          
+          console.log('Géneros guardados en la base de datos.');
+          return newGenres;
     }catch(error){
         "Error al obtener datos de la API:",error
     }

@@ -9,6 +9,9 @@ const {
 const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/videogames`, {
   logging: false, // set to console.log to see the raw SQL queries
   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+  // dialectOptions: {
+  //   schema: 'public' // Establece aquí el nombre de tu esquema
+  // }
 });
 const basename = path.basename(__filename);
 
@@ -36,8 +39,8 @@ const { Videogame,Genre } = sequelize.models;
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
-Videogame.belongsToMany(Genre, { through: 'videogame_genre' });
-Genre.belongsToMany(Videogame, { through: 'videogame_genre' });
+Videogame.belongsToMany(Genre, { through: 'videogamegenre' });
+Genre.belongsToMany(Videogame, { through: 'videogamegenre' });
 
 
 

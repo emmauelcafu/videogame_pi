@@ -16,7 +16,7 @@ return(
             key={videogame.id}
             id={videogame.id}
             name={videogame.name}
-            description={videogame.image}
+            description={videogame.description}
             released={videogame.released}
             image={videogame.image}
             rating={videogame.rating}

@@ -1,7 +1,7 @@
-import { GET_VIDEOGAMES} from "../actions/index";
+import { GET_VIDEOGAMES, GET_REPICES_DETAIL} from "../actions/index";
 
 
-let initialState ={videogame:[]}
+let initialState ={videogame:[], videogameId:null}
 
 function rootReducer(state=initialState, action){
     
@@ -12,10 +12,18 @@ function rootReducer(state=initialState, action){
             ...state,
             videogame: action.payload
             
-          }      
+          }    
+          case GET_REPICES_DETAIL:
+
+          return{
+            ...state,
+            videogameId: action.payload
+          }
+
+          
         default:
             return state
     }
-
+    
 }
 export default rootReducer;

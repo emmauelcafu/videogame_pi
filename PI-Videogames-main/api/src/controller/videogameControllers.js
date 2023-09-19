@@ -6,8 +6,16 @@ const {
   } = process.env;
 
 //creamos un video juegos a la DB//
-  const createVideogamesDB =async (name,description,released,image,rating,platforms,Genres)=>{
-//    const bd = Genre
+  const createVideogamesDB =async (name,description,released,image,rating,platforms,genres)=>{
+
+  try{//verificar si ya existe en db.
+    const existenteGenres = await Genre.findAll({
+      where: {
+        name: genres,
+      }
+    }) 
+
+
     const newVideoGame = await Videogame.create({
         name,
         description,
@@ -16,35 +24,26 @@ const {
         rating,
         platforms
     });
+    //asociar el videojuego con los genres existentes
 
-    if (Genres && Genres.length > 0) {
-      const genresToAssociate = await Genre.findAll({
-        where: {
-          name: Genres,
-        },
-      });
+    if(existenteGenres.length > 0){
+      await newVideoGame.addGenres(existenteGenres);
+    }else{//coloca el genres predeterminado si no lo hay 
+      const defaultGenre = await Genre.findOne({ where: { name: 'Sin género' } });
+      if (defaultGenre) {
+        await newVideoGame.addGenre(defaultGenre);
+      }
+     }
+     return newVideoGame
+     
+    }catch(error){
+    console.error('Error al crear el videojuego:', error);
+    throw error;
+  }
 
-      await newVideoGame.addGenres(genresToAssociate);
-    }
-    
-    // await newVideoGame.addGenres(Genres)
-    
-   
-    return newVideoGame;
 }
 
-//filto para la api//
-// function infofilter(array){
-//         return{
-//             name:array.name,
-//              description:array.description,
-//              released: array.released,
-//              image:array.background_image,
-//              rating: array.rating,
-//            platforms: array.platforms.map(arr=>arr.name),  //arroja null hay que arreglarlo 
-//            genres: array.genres.map(genre=>genre.name) 
-//         }
-//     }
+//filtrado
     function cls(array){
         return array.map( array=> {
             return{
@@ -63,8 +62,6 @@ const {
 //solicitud de todo los video juegos 
 const getAllVideoGame=async ()=>{
 
-    // const VideogameDB = await Videogame.findAll(); // si funsiona solo es que genera error cuando se consulta todos los videos
-
     try{
     const infoApi = await axios.get(`https://api.rawg.io/api/games?&key=${KEY_API}`);
     const infoApiData = infoApi.data.results;
@@ -78,17 +75,32 @@ const getAllVideoGame=async ()=>{
 }
 
 //Esta ruta debe obtener los primeros 15 videojuegos que se encuentren con la palabra recibida por query.👍
-//Debe poder buscarlo independientemente de mayúsculas o minúsculas.
-//Debe buscar tanto los de la API como los de la base de datos.
+//Debe poder buscarlo independientemente de mayúsculas o minúsculas.👍
+//Debe buscar tanto los de la API como los de la base de datos.👍
 // controlamos el get por nonbre👍
 const getVideogByName=async(name)=>{
-   try{
+   try{//buscamos en videogame db...
+    const converName = name.toLowerCase();//se convierte en minuscula
+      const dbvideogame = await Videogame.findOne({
+        where:{
+          name:converName,
+        },
+        include: Genre,
+      })
+      
+      if(dbvideogame){
+        return dbvideogame;
+      }else{
     const infoApi  = await axios.get(`https://api.rawg.io/api/games?search=${name}&key=${KEY_API}`);
-    // se filtra la api//
     const infoApiData  = infoApi.data.results;
-    const infomap =  cls(infoApiData).slice(0,15);
-    
-   return infomap;
+
+    if (infoApiData.length > 0){
+      const infomap =  cls(infoApiData).slice(0,15);
+      return infomap;
+    } else{
+      }
+        return console.log("no existe el juego");
+      }
    }catch(error){
     console.error("Error al obtener datos de la API:", error);
        
@@ -103,10 +115,17 @@ const getVideogId= async(id,source)=>{
 
     try {
             // se incluye la bd para validar si es en la api o en bd
-        const infoApi =source === "api"? (await axios.get(`https://api.rawg.io/api/games/${id}?key=${KEY_API}`)).data: await Videogame.findByPk(id)
-        // se filtra la api// al mamento de consultar por id de la DB arroja erro , debe ser un erro de filtrado a la DB.
-        const infoApiData = infoApi;
-        return infoApiData;
+        const infoApi = source === "api"? (await axios.get(`https://api.rawg.io/api/games/${id}?key=${KEY_API}`)).data: await Videogame.findByPk(id);
+            if(source === "api"){
+            const {id,name,description,released,background_image,rating,platforms,genres}= infoApi;
+              platformNa = platforms.map((arr)=> arr.platform.name);
+                image= background_image
+             genreNa = genres.map((genres)=>genres.name);
+
+            return{id,name,description,released,image,rating,platformNa,genreNa};
+        
+        }
+        return infoApi;
     } catch (error) {
     console.error("Error al obtener datos de la API:", error);
     }
