@@ -1,0 +1,19 @@
+/* .div{
+    text-align: center;
+} */
+.boton{
+  border-radius: 5%;  
+  cursor: pointer;
+  border: none;
+  padding: 10px 20px;
+}
+
+.input{
+    padding: 10px 20px;
+    border-radius: 5%;
+    border: none;
+    background-color: rgb(219, 171, 212);
+    color: white;
+    text-align: center;
+
+}

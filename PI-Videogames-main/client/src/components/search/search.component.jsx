@@ -1,10 +1,11 @@
 
+import "./search.style.css"
 
 function Search(){
 return(
-    <div>
-        <input type="text"placeholder="buscar" />
-        <button>buscar</button>
+    <div className="div">
+        <input className="input" type="text"placeholder="buscar" />
+        <button className="boton">Buscar</button>
     </div>
 )
 }

@@ -18,7 +18,7 @@ function Home (){
     return(
         <div >
             <h1 className="h1-text">Juegos a la moda</h1>
-            <Navbar/>
+            <Navbar className="navBar"/>
             <Cards />
         </div>
     )

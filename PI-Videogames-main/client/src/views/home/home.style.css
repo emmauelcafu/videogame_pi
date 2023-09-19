@@ -1,13 +1,13 @@
 body {
   /* Establece un fondo degradado con dos colores */
-  background: linear-gradient(to bottom, #3498db, #2c3e50); /* Puedes cambiar estos colores según tus preferencias */
-
-  /* Añade otros estilos necesarios */
-  font-family: Arial, sans-serif;
-  color: #ffffff; /* Color del texto */
-  margin: 0; /* Elimina el margen predeterminado del cuerpo */
-  padding: 0; /* Elimina el relleno predeterminado del cuerpo */
+  background-image: url("../../img/81jnrg0rmpl-sl1500_wq1n.jpg");
+  background-size: cover  ;/*contain --> el problema es que solo es en el container */ 
+  background-repeat: no-repeat;
 }
 .h1-text{
   text-align: center;
+}
+.navBar{
+  text-align: center;
+  background-color: red;
 }
