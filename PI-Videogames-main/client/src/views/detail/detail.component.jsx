@@ -1,31 +1,40 @@
-import {useSelector} from "react-redux";
-
+import {useDispatch, useSelector} from "react-redux";
+import {useParams} from "react-router-dom"
+import{getVideogameId}from "../../redux/actions/index"
+import React,{ useEffect } from "react";
+import { Link } from "react-router-dom";
 import "./detail.style.css"
 
 function Delail(){
 
+const {id}= useParams();
+const disptch = useDispatch();
+const videoGameDetail = useSelector(state=>state.videogameId)
+useEffect(()=>{
+    disptch(getVideogameId(id));
+},[disptch,id])
 
-const videoGameDetail = useSelector(state=>state.videogame) 
 // valido si el es un array para saber si hay error:
-if (!Array.isArray(videoGameDetail)) {
-    return <div>No hay datos de videojuegos disponibles.</div>;
+if (!videoGameDetail) {
+    return <div>Cargando....</div>;
     
 }
     return(
         <div className="Detail_component">
-
-
             <h1>estamos en el Detail</h1>
 
-            <p>ID:{videoGameDetail.id}</p>
-            <p>name</p>
-            <p>imagen</p>
-            <p>plataforma</p>
-            <p>description</p>
-            <p>fecha</p>
-            <p>rating</p>
-            <p>genre</p>
-
+            <p>ID: {videoGameDetail.id}</p>
+            <p>name: {videoGameDetail.name}</p>
+            <img className="image" src={videoGameDetail.image} alt={videoGameDetail.name} />
+            <p>plataforma: {videoGameDetail.platformNa.join(', ')}</p>
+            <p>{videoGameDetail.description}</p>
+            <p>fecha :{videoGameDetail.released}</p>
+            <p>rating: {videoGameDetail.rating}</p>
+            <p>genre: {videoGameDetail.genreNa.join(', ')}</p>
+        
+                <Link to={"/home/"}>
+                <button >ir al home</button>
+                </Link>
         </div>
     )
 }
