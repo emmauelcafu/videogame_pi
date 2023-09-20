@@ -3,7 +3,7 @@ import axios from "axios";
 export const GET_REPICES_DETAIL = "GET_REPICES_DETAIL";
 export const GET_VIDEOGAMES = "GET_VIDEOGAMES";
 export const GET_VIDEOGAMESNAME ="GET_VIDEOGAMESNAME";
-
+export const POST_CREATEVIDEOGAMES = "POST_CREATEVIDEOGAMES";
     
 export function getVideogameId(id){
     return async function(dispatch){
@@ -37,4 +37,17 @@ export function getVideogam(){
                 payload:videogameName
             })
         }
+    }
+
+    export function getCreateVideogame (gameData){
+
+        return async function(dispatch){
+            const response = await axios.post("http://localhost:3001/videogames/", gameData)
+            const createVideogames =response.data;
+            return dispatch({
+                type:POST_CREATEVIDEOGAMES,
+                payload: createVideogames
+            })
+        }
+
     }
