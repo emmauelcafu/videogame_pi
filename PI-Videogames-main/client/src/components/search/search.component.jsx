@@ -1,13 +1,12 @@
+import "./search.style.css";
 
-import "./search.style.css"
-
-function Search(){
-return(
+function Search() {
+  return (
     <div className="div">
-        <input className="input" type="text"placeholder="buscar" />
-        <button className="boton">Buscar</button>
+      <input className="input" type="text" placeholder="buscar" />
+      <button className="boton">Buscar</button>
     </div>
-)
+  );
 }
 
 export default Search;
