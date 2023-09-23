@@ -2,6 +2,9 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
+
+import "./form.style.css"
+
 function Form() {
   const [form, setForm] = useState({
     name: "",
@@ -44,7 +47,7 @@ function Form() {
       .catch((err) => alert("eyyyy! no se creo el video juego errrrrrdaaaa"));
   };
   return (
-    <div>
+    <div className="div-form">
       <h1> Registra tu video juego</h1>
 
       <form onSubmit={submiHandler}>

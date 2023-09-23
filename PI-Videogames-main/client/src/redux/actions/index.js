@@ -29,27 +29,18 @@ export function getVideogam() {
 
 export function getVideoname(name) {
   return async function (dispatch) {
-    const response = await axios.get(
-      `http://localhost:3001/videogames/${name}`
-    );
+    try{
+   const response = await axios.get(`http://localhost:3001/videogames/?name=${name}`);
     const videogameName = response.data;
+   
     return dispatch({
       type: GET_VIDEOGAMESNAME,
       payload: videogameName,
     });
+  }catch (error){
+    alert("error en la busqueda de nombre", error)
+  }
   };
 }
 
-export function getCreateVideogame(gameData) {
-  return async function (dispatch) {
-    const response = await axios.post(
-      "http://localhost:3001/videogames/",
-      gameData
-    );
-    const createVideogames = response.data;
-    return dispatch({
-      type: POST_CREATEVIDEOGAMES,
-      payload: createVideogames,
-    });
-  };
-}
+

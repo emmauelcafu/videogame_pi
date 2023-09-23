@@ -2,17 +2,18 @@ import {
   GET_VIDEOGAMES,
   GET_REPICES_DETAIL,
   GET_VIDEOGAMESNAME,
-  POST_CREATEVIDEOGAMES,
+  
 } from "../actions/index";
 
 let initialState = {
   videogame: [],
   videogameId: null,
-  videogamename: [],
-  createvideogames: [],
+  videogameName: [],
 };
 
 function rootReducer(state = initialState, action) {
+ 
+
   switch (action.type) {
     case GET_VIDEOGAMES:
       return {
@@ -23,19 +24,16 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         videogameId: action.payload,
-      };
+      };//buscar por nombre
     case GET_VIDEOGAMESNAME:
       return {
         ...state,
-        videogamename: action.payload,
-      };
-    case POST_CREATEVIDEOGAMES:
-      return {
-        ...state,
-        createvideogames: action.payload,
+        videogameName: action.payload,
       };
     default:
       return state;
   }
+  
 }
+
 export default rootReducer;
