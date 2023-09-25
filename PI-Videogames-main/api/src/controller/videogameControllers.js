@@ -73,7 +73,7 @@ const getAllVideoGame = async () => {
     );
     const infoApiData = infoApi.data.results;
 
-    const infoAllData = cls(infoApiData).slice(0, 15); // se retorna solo 15 videogames
+    const infoAllData = cls(infoApiData).slice(0, 100); // se retorna solo 15 videogames
     return infoAllData;
   } catch (error) {
     console.error("Error al obtener datos de la API:", error);

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import Cards from "../../components/cards/cards.component";
-import Navbar from "../../components/navbar/navnar.component";
+import Navbar from "../../components/navbar/navbar.component";
 import { useDispatch } from "react-redux";
 import { getVideogam } from "../../redux/actions/index";
 

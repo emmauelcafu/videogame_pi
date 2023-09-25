@@ -4,6 +4,8 @@ export const GET_REPICES_DETAIL = "GET_REPICES_DETAIL";
 export const GET_VIDEOGAMES = "GET_VIDEOGAMES";
 export const GET_VIDEOGAMESNAME = "GET_VIDEOGAMESNAME";
 export const POST_CREATEVIDEOGAMES = "POST_CREATEVIDEOGAMES";
+export const SET_ORDER = "SET_ORDER";
+export const SET_FILTER_RATING = "SET_FILTER_RATING";
 
 export function getVideogameId(id) {
   return async function (dispatch) {
@@ -43,4 +45,18 @@ export function getVideoname(name) {
   };
 }
 
+export function filterVideogames(order){
+  return function(dispatch){
+    return dispatch({
+      type: SET_ORDER,order
+    })
+  }
+}
 
+export function filterRantigVideoGames(rating){
+  return function(dispatch){
+    return dispatch({
+      type: SET_FILTER_RATING,rating
+    })
+  }
+}

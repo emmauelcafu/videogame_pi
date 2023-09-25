@@ -6,7 +6,7 @@ import "./search.style.css";
 
 function Search() {
   const dispatch = useDispatch();
-
+//guardar lo del input
   const [videoGameName, setVideoGameName] = useState("");
 
   const handlerSearch = (e) => {
@@ -18,8 +18,6 @@ function Search() {
     
   };
   
-  
-
   return (
     <div className="div">
       <input
